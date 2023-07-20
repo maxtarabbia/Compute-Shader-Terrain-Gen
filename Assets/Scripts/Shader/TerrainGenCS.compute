@@ -3,12 +3,14 @@
 #include "noise.inc"
 
 
+
 struct Vert
 {
     float2 position;
     float height;
 };
 
+float z;
 RWStructuredBuffer<Vert> verts; 
 
 [numthreads(64,1,1)]
@@ -20,7 +22,7 @@ void CSMain (uint3 id : SV_DispatchThreadID)
     
     //vert.height = snoise(vert.position) * 20;
     
-    vert.height = snoisefracal(float3(vert.position, 4));
+    vert.height = snoisefracal6(float3(vert.position, z));
     
     verts[id.x] = vert;
 }

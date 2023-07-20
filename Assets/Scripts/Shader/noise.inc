@@ -485,6 +485,18 @@ float _snoise(float3 p) {
 	return dot(d, float4(52.0,52.0,52.0,52.0));
 }
 
+//63 total
+
+//
+float snoisefracal6(float3 m) {
+	return   0.5079365* _snoise(m)
+		+0.253968* _snoise(2.0*m)
+		+0.126984* _snoise(4.0*m)
+		+0.063492* _snoise(8.0*m)
+		+0.031746* _snoise(16.0*m)
+		+0.015873* _snoise(32.0*m);
+}
+
 float snoisefracal(float3 m) {
 	return   0.5333333* _snoise(m)
 		+0.2666667* _snoise(2.0*m)

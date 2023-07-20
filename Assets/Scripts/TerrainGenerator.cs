@@ -38,6 +38,8 @@ public class TerrainGenerator : MonoBehaviour
     float startingAmp;
     float startingFreq;
 
+    public float seed;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,8 +51,9 @@ public class TerrainGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        AmplScale = startingAmp * Mathf.Sin(Time.time);
-        FreqScale = startingFreq * (Mathf.Cos(Time.time*1.414f)*0.5f + 2f);
+        //AmplScale = startingAmp * Mathf.Sin(Time.time);
+        //FreqScale = startingFreq * (Mathf.Cos(Time.time*1.414f)*0.5f + 2f);
+        seed = Time.time / 10;
         DrawMapInEditor();
     }
     public void DrawMapInEditor()
@@ -90,6 +93,7 @@ public class TerrainGenerator : MonoBehaviour
 
 
         computeShader.SetBuffer(0, "verts", vertBuffer);
+        computeShader.SetFloat("z", seed);
         computeShader.SetFloat("resolution", data.Length);
 
 
