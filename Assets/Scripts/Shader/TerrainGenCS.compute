@@ -1,0 +1,29 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+#include "noise.inc"
+
+
+struct Vert
+{
+    float2 position;
+    float height;
+};
+
+RWStructuredBuffer<Vert> verts; 
+
+[numthreads(64,1,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+
+    Vert vert = verts[id.x];
+    vert.height = vert.position.x * sin(vert.position.y);
+    
+    //vert.height = snoise(vert.position) * 20;
+    
+    vert.height = snoisefracal(float3(vert.position, 4));
+    
+    verts[id.x] = vert;
+}
+
+
+
