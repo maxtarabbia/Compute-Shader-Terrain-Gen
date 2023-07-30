@@ -9,6 +9,7 @@ using static UnityEngine.Mesh;
 
 public struct Vert
 {
+    public Vector3 color;
     public Vector2 position;
     public float height;
 
@@ -28,6 +29,7 @@ public class TerrainGenerator : MonoBehaviour
     GameObject[] objects;
 
     GameObject plane;
+
 
     Mesh mesh;
 
@@ -59,6 +61,12 @@ public class TerrainGenerator : MonoBehaviour
     public void DrawMapInEditor()
     {
         //DefineObjects();
+        if (data != null && data.Length == size *size)
+        {
+            OnRandomizeGPU();
+            return;
+        }
+
         Profiler.BeginSample("Initializing data");
         data = new Vert[size * size];
         for (int x = 0; x < size; x++)
@@ -67,7 +75,7 @@ public class TerrainGenerator : MonoBehaviour
             {
                 data[x * size + y] = new()
                 {
-                    position = new Vector2(x, y) * FreqScale / (size),
+                    position = new Vector2(x - size/2, y - size/2) * FreqScale / (size),
                     height = 0
                 };
 
@@ -82,9 +90,10 @@ public class TerrainGenerator : MonoBehaviour
     public void OnRandomizeGPU()
     {
         Profiler.BeginSample("Running Compute Shader");
+        int Vec3size = sizeof(float) * 3;
         int Vec2Size = sizeof(float) * 2;
         int floatSize = sizeof(float);
-        int totalSize = Vec2Size + floatSize;
+        int totalSize = Vec2Size + floatSize + Vec3size;
 
 
         ComputeBuffer vertBuffer = new ComputeBuffer(data.Length,totalSize);
@@ -163,6 +172,8 @@ public class TerrainGenerator : MonoBehaviour
         int verticesperline = width;
 
         Vector3[] verts = new Vector3[size * size];
+        // CHANGE TO COLOR32
+        Color32[] colors = new Color32[size * size];
         int trisize = (size - 1) * (size - 1) * 6;
 
         int[] triArray = new int[trisize];
@@ -175,6 +186,8 @@ public class TerrainGenerator : MonoBehaviour
 
                 verts[vertexindex] = new Vector3(x/(size/MeshScale), data[x * size + y].height * AmplScale, y/(size/MeshScale));
 
+                colors[vertexindex] = vecToCol(data[x * size + y].color);
+                
                 //  meshdata.vertices[vertexindex] = new Vector3(topleftX + x, heightmap[x, y] * heightmult, topleftz - y);
 
                 //mesh.uv[vertexindex] = new Vector2(x / (float)width, y / (float)height);
@@ -193,14 +206,21 @@ public class TerrainGenerator : MonoBehaviour
         }
         Profiler.EndSample();
         Profiler.BeginSample("Applying Lists");
+        mesh.colors32 = colors;
         mesh.vertices = verts;
         mesh.triangles = triArray;
         Profiler.EndSample();
 
     }
+    public Color32 vecToCol(Vector3 vec)
+    {
+        return new Color32((byte)(vec.x * 255), (byte)(vec.y * 255), (byte)(vec.z * 255), 255);
+    }
 }
+
 public class MapVert
 {
+    Vector3 color;
     Vector2Int position;
     float height;
 }

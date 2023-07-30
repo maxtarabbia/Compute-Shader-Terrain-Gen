@@ -645,9 +645,17 @@
       <Project>{D2587CE0-6674-E466-1290-D2124012DFB0}</Project>
       <Name>Unity.TextMeshPro.Player</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.RenderPipelines.Core.Runtime.Player.csproj">
+      <Project>{54CC21A9-207F-3497-3E70-F7FD06A69328}</Project>
+      <Name>Unity.RenderPipelines.Core.Runtime.Player</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.VisualScripting.Flow.Player.csproj">
       <Project>{A8AD8A6E-A958-4E3A-1269-EE185403022F}</Project>
       <Name>Unity.VisualScripting.Flow.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.RenderPipelines.Core.ShaderLibrary.Player.csproj">
+      <Project>{D1AFEB13-62F4-C6C5-F2A3-F529BB03CB9F}</Project>
+      <Name>Unity.RenderPipelines.Core.ShaderLibrary.Player</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEngine.UI.Player.csproj">
       <Project>{1C8DDE2F-A33F-4AC5-75EF-62DB2ECB6513}</Project>
@@ -668,6 +676,10 @@
     <ProjectReference Include="Unity.Services.Core.Environments.Player.csproj">
       <Project>{EC89BDBD-1728-65C2-EB1C-D0D3582A57BB}</Project>
       <Name>Unity.Services.Core.Environments.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.Player.csproj">
+      <Project>{F134C697-5FB8-E594-873C-FDD0420834D3}</Project>
+      <Name>Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.Player</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.VisualScripting.State.Player.csproj">
       <Project>{EAE81B5C-CA18-3643-7EC6-FF687F069B4C}</Project>

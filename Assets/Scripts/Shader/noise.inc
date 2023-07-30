@@ -497,6 +497,7 @@ float snoisefracal6(float3 m) {
 		+0.015873* _snoise(32.0*m);
 }
 
+
 float snoisefracal(float3 m) {
 	return   0.5333333* _snoise(m)
 		+0.2666667* _snoise(2.0*m)
